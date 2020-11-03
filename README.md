@@ -58,14 +58,8 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
 
         public EditText editText;
 
-        public MyHolder(@NonNull View itemView) {
-            super(itemView);
-            editText = itemView.findViewById(R.id.editText);
-        }
-
-        public void bindData(String data) {
-
-        }
+        ...
+        
     }
 }
 ```
@@ -125,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
 
         textView.setText(str);
     }
+    
+    ...
+    
 }
 ```
 
