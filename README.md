@@ -1,6 +1,6 @@
 # RecyclerViewDynamic
 
-* `activity_main.xml`
+### `activity_main.xml`
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
@@ -25,19 +25,33 @@
 </LinearLayout>
 ```
 
-* `item_rv.xml`
+### `item_rv.xml`
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:orientation="horizontal">
 
     <EditText
         android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:hint="Input Here" />
+
+    <ImageView
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitStart"
+        android:src="@drawable/ic_baseline_delete_24" />
 </LinearLayout>
 ```
 
-* Make class `DynamicAdapter.java`
+### Make class `DynamicAdapter.java`
 ```java
 public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder> {
 
@@ -54,9 +68,26 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
 
     ...
 
+    @Override
+    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+        holder.bindData(list.get(position));
+
+        holder.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.remove(position);
+                notifyItemRemoved(position);
+//                notifyItemRangeChanged(position,list.size());
+            }
+        });
+    }
+
+    ...
+
     public static class MyHolder extends RecyclerView.ViewHolder {
 
         public EditText editText;
+        public ImageView btn;
 
         ...
         
@@ -64,7 +95,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
 }
 ```
 
-* Make class `MainActivity.java`
+### Make class `MainActivity.java`
 ```java
 public class MainActivity extends AppCompatActivity {
 
@@ -104,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void initGetDataPerIndex() {
         String str = "";

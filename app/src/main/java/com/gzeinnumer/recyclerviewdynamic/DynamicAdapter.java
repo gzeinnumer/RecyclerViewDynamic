@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +37,15 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holder.bindData(list.get(position));
+
+        holder.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.remove(position);
+                notifyItemRemoved(position);
+//                notifyItemRangeChanged(position,list.size());
+            }
+        });
     }
 
     @Override
@@ -46,10 +56,12 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
     public static class MyHolder extends RecyclerView.ViewHolder {
 
         public EditText editText;
+        public ImageView btn;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             editText = itemView.findViewById(R.id.editText);
+            btn = itemView.findViewById(R.id.btn);
         }
 
         public void bindData(String data) {
