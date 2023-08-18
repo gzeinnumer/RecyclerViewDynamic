@@ -1,6 +1,7 @@
 package com.gzeinnumer.recyclerviewdynamic;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,16 +36,13 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.MyHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.bindData(list.get(position));
 
-        holder.btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                list.remove(position);
-                notifyItemRemoved(position);
+        holder.btn.setOnClickListener(v -> {
+            list.remove(position);
+            notifyItemRemoved(position);
 //                notifyItemRangeChanged(position,list.size());
-            }
         });
     }
 
